@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Reply</title>
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+<link rel="stylesheet" href="taskpane.css">
+</head>
+<body>
+
+<div class="header">
+  <div class="brand">AI Reply <span class="sub">by Claude</span></div>
+  <button id="btnSettings" class="icon-btn" title="Cài đặt">&#9881;</button>
+</div>
+
+<!-- CÀI ĐẶT -->
+<div id="settings" class="card settings" style="display:none">
+  <div class="card-title">Cài đặt</div>
+  <label for="apiKey">Claude API key</label>
+  <input id="apiKey" type="password" placeholder="sk-ant-...">
+  <label for="model">Model</label>
+  <select id="model">
+    <option value="claude-sonnet-5-5">Claude Sonnet 5.5 (khuyên dùng)</option>
+    <option value="claude-haiku-5-5">Claude Haiku 5.5 (nhanh, rẻ)</option>
+    <option value="claude-opus-5-5">Claude Opus 5.5 (cao cấp nhất)</option>
+  </select>
+  <label for="signName">Ký tên cuối thư</label>
+  <input id="signName" type="text" placeholder="Để trống nếu Outlook đã tự chèn chữ ký">
+  <label for="persona">Thông tin về bạn (giúp AI viết đúng vai)</label>
+  <textarea id="persona" rows="2" placeholder="VD: CTO Dalat Hasfarm, phụ trách dự án Project Flower"></textarea>
+  <div class="row">
+    <button id="btnSaveSettings" class="btn primary">Lưu</button>
+    <span id="settingsMsg" class="muted"></span>
+  </div>
+</div>
+
+<!-- EMAIL ĐANG CHỌN -->
+<div class="card">
+  <div class="muted small">Đang trả lời</div>
+  <div id="mailFrom" class="mail-from">...</div>
+  <div id="mailSubject" class="mail-subject"></div>
+</div>
+
+<!-- TÙY CHỌN -->
+<div class="card">
+  <div class="row two">
+    <div class="col">
+      <label for="lang">Ngôn ngữ</label>
+      <select id="lang">
+        <option value="auto">Theo email gốc</option>
+        <option value="vi">Tiếng Việt</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+    <div class="col">
+      <label for="tone">Giọng văn</label>
+      <select id="tone">
+        <option value="professional">Chuyên nghiệp</option>
+        <option value="friendly">Thân thiện</option>
+        <option value="brief">Ngắn gọn</option>
+        <option value="formal">Trang trọng</option>
+      </select>
+    </div>
+  </div>
+  <label for="notes">Ý chính muốn trả lời (không bắt buộc)</label>
+  <textarea id="notes" rows="3" placeholder="VD: Đồng ý chia sẻ dữ liệu, nhưng cần NDA trước. Hẹn gọi thứ Sáu 10h."></textarea>
+  <button id="btnGenerate" class="btn primary full">✨ Soạn trả lời</button>
+</div>
+
+<div id="status" class="status" style="display:none"></div>
+
+<!-- BẢN NHÁP -->
+<div id="draftBox" class="card" style="display:none">
+  <div class="card-title">Bản nháp <span class="muted small">(sửa trực tiếp được)</span></div>
+  <textarea id="draft" rows="14"></textarea>
+
+  <label for="refine">Yêu cầu AI chỉnh lại</label>
+  <div class="row">
+    <input id="refine" type="text" placeholder="VD: ngắn hơn, thêm lời cảm ơn...">
+    <button id="btnRefine" class="btn">Chỉnh</button>
+  </div>
+
+  <div class="actions">
+    <button id="btnReplyAll" class="btn primary">Trả lời tất cả</button>
+    <button id="btnReply" class="btn">Trả lời</button>
+  </div>
+  <div class="muted small hint">Bản nháp sẽ mở trong cửa sổ trả lời của Outlook. Kiểm tra lần cuối rồi bấm <b>Send</b>.</div>
+</div>
+
+<script src="taskpane.js"></script>
+</body>
+</html>
